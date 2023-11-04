@@ -1,10 +1,4 @@
 import pandas as pd
-
-# 从Excel文件读取数据，跳过第一行
-# 自己输入文件路径
-# 示例,再优化
-a = "成绩表.xlsx"
-
 # 将数据转化为包含字典的列表
 class Student():
     
@@ -38,6 +32,3 @@ class Student():
         for student in self.student_list:
             print(student)
 
-if __name__ == '__main__':
-    student = Student(a)
-    student.showAll()
