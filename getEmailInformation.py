@@ -56,9 +56,9 @@ class EmailInformation:
             grades = self.studentGrades[studentId]
             subjects = [subject for subject, grade in grades]
             grades = [grade for subject, grade in grades]
-            gradeInfo = ''
+            gradeInfo = '\n'
             for subject, grade in zip(subjects, grades):
-                gradeInfo += f'[{subject}]： {grade} ,  '
+                gradeInfo += f'[{subject}]： {grade} \n '
 
             notification = f"""
             亲爱的{studentName}同学:
