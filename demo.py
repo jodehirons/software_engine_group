@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinterdnd2 import DND_FILES, TkinterDnD
 import dataPreview
-import data_preview
 # import genReport
 import selectData
 import getEmailInformation
@@ -94,7 +93,7 @@ class demo:
     def preview_announce(self):
         if self.path:
             f = getEmailInformation.EmailInformation(self.window.getData())
-            data_preview.notice(f.generateNotification())
+            dataPreview.notice(f.generateNotification())
         else:
             self.open_success_window("请先拖拽文件")
 
