@@ -1,59 +1,78 @@
 import pandas as pd
-
-# ¶ÁÈ¡³É¼¨±íÎÄ¼ş
-a = "³É¼¨±í.xlsx"
-# ÔÚÔËĞĞÇ°ĞèÒªÔÙÍ¬Ä¿Â¼ÏÂ·ÅÖÃºÃÎÄ¼ş
-
-# ½«Êı¾İ×ª»¯Îª°üº¬×ÖµäµÄÁĞ±í
-class Student():
-
-    def __init__(self, a):
-        self.a = a
-        self.student_list = []
-        self.readExcel()
-
-    def readExcel(self):
-
-        # ¶ÁÈ¡ExcelÎÄ¼ş
-        data = pd.read_excel(self.a, skiprows=1)
-
-        for index, row in data.iterrows():
-            student_info = {
-                'Ñ§ºÅ': row['Ñ§ºÅ'],
-                'ĞÕÃû': row['ĞÕÃû'],
-                "Ñ¡¿ÎÊ±¼ä": row['Ñ¡¿ÎÊ±¼ä'],
-                "¿Î³ÌÃû³Æ": row['¿Î³ÌÃû³Æ'].replace('\xa0', ' '),
-                "Ñ§·Ö": row['Ñ§·Ö'],
-                "°Ù·Ö³É¼¨": row['°Ù·Ö³É¼¨'],
-                "Îå·Ö³É¼¨": row['Îå·Ö³É¼¨'],
-                "¿¼ÊÔÀàĞÍ": row['¿¼ÊÔÀàĞÍ'],
-                "Ñ¡ĞŞÀàĞÍ": row['Ñ¡ĞŞÀàĞÍ'].replace('\xa0', ' '),
-                # Ìí¼ÓÆäËûÑ§ÉúĞÅÏ¢×Ö¶Î
-            }
-            self.student_list.append(student_info)
-
-    # ´òÓ¡°üº¬Ñ§ÉúĞÅÏ¢µÄÁĞ±í student_list
-    def showAll(self):
-        for student in self.student_list:
-            print(student)
+from readExcel import Student
 
 
-# ±éÀúÃ¿¸öÑ§Éú
-for student in self.student_list:
-    # Éú³É³É¼¨ĞÅÏ¢
-    grade_info = ' '.join(f'[{subject}]£º {grade}' for subject, grade in zip(subjects, grades))
-
-    # Éú³É³É¼¨µ¥Í¨Öª
-    notification = f"""
-    Ç×°®µÄ{'ĞÕÃû'}Í¬Ñ§:
-    ×£ºØÄúË³ÀûÍê³É±¾Ñ§ÆÚµÄÑ§Ï°£¡½ÌÎñ´¦ÔÚ´ËÏòÄú·¢ËÍ×îĞÂµÄ³É¼¨µ¥¡£
-    {grade_info} # ĞèÒªĞŞ¸Ägrade_info¸ñÊ½
-    Ï£ÍûÄúÄÜ¹»¶Ô×Ô¼ºµÄ³É¼¨¸Ğµ½ÂúÒâ£¬²¢¼ÌĞø±£³ÖÅ¬Á¦ºÍ»ı¼«µÄÑ§Ï°Ì¬¶È¡£Èç¹ûÄúÔÚÄ³Ğ©¿ÆÄ¿ÉÏÃ»ÓĞ´ïµ½Ô¤ÆÚµÄ³É¼¨£¬²»Òª»ÒĞÄ£¬ÕâÒ²ÊÇÑ§Ï°¹ı³ÌÖĞµÄÒ»²¿·Ö¡£ÎÒÃÇ¹ÄÀøÄúÓëÄúµÄÈÎ¿Î½ÌÊ¦»ò¸¨µ¼Ô±½øĞĞ½»Á÷£¬ËûÃÇ½«ºÜÀÖÒâÎªÄú½â´ğÈÎºÎÒÉÎÊ²¢Ìá¹©°ïÖú¡£Çë¼Ç×¡£¬Ñ§Ï°ÊÇÒ»¸ö³ÖĞø²»¶ÏµÄ¹ı³Ì£¬ÎÒÃÇÏàĞÅÄúÓĞÄÜÁ¦¿Ë·şÀ§ÄÑ²¢È¡µÃ¸ü´óµÄ½ø²½¡£
-    ÔÙ´Î¹§Ï²Äú£¬×£ÄúÑ§Ï°½ø²½¡¢ÊÂÒµ³É¹¦£¡
-    ½ÌÎñ´¦
+class EmailInformation:
     """
+    EmailInformationç±»ç”¨äºå¤„ç†å­¦ç”Ÿçš„ç”µå­é‚®ä»¶ä¿¡æ¯ã€‚
+    """
+    def __init__(self, student: Student):
+        """
+        åˆå§‹åŒ–æ–¹æ³•ï¼Œæ¥æ”¶ä¸€ä¸ªStudentå¯¹è±¡ä½œä¸ºå‚æ•°ï¼Œä»è¯¥å¯¹è±¡ä¸­è·å–å­¦ç”Ÿä¿¡æ¯ã€‚
+        """
+        
+        self.student = student
+        self.studentIdName = self.generateIdNameMapping()
+        self.studentGrades = self.separateGradesById()
+        
 
-    # ´òÓ¡³É¼¨µ¥Í¨Öª
+    def generateIdNameMapping(self):
+        '''
+        ç”Ÿæˆå­¦å·å’Œå§“åçš„æ˜ å°„
+        '''
+        studentIdName = {}
+        for student in self.student.student_list:
+            studentIdName[student['å­¦å·']] = student['å§“å']
+        return studentIdName
+    
+    def separateGradesById(self):
+        '''
+        å°†å­¦ç”Ÿçš„æˆç»©æŒ‰ç…§å­¦å·åˆ†å¼€
+        '''
+        studentGrades = {}
+        for student in self.student.student_list:
+            studentId = student['å­¦å·']
+            if studentId not in studentGrades:
+                studentGrades[studentId] = []
+            courseName = ''
+            score = 0
+            for subject, item in student.items():
+                if subject == 'è¯¾ç¨‹åç§°':
+                    courseName = item
+                if subject == 'ç™¾åˆ†æˆç»©':
+                    score = item
+            studentGrades[studentId].append((courseName, score))
+        return studentGrades
+    
+    
+    def generateNotification(self):
+        '''
+        ç”Ÿæˆæˆç»©å•é€šçŸ¥
+        '''
+        notificationList = []
+        for studentId in self.studentIdName.keys():
+            studentName = self.studentIdName[studentId]
+            grades = self.studentGrades[studentId]
+            subjects = [subject for subject, grade in grades]
+            grades = [grade for subject, grade in grades]
+            gradeInfo = ''
+            for subject, grade in zip(subjects, grades):
+                gradeInfo += f'[{subject}]ï¼š {grade} ,  '
+
+            notification = f"""
+            äº²çˆ±çš„{studentName}åŒå­¦:
+            ç¥è´ºæ‚¨é¡ºåˆ©å®Œæˆæœ¬å­¦æœŸçš„å­¦ä¹ ï¼æ•™åŠ¡å¤„åœ¨æ­¤å‘æ‚¨å‘é€æœ€æ–°çš„æˆç»©å•:
+            {gradeInfo}
+            å¸Œæœ›æ‚¨èƒ½å¤Ÿå¯¹è‡ªå·±çš„æˆç»©æ„Ÿåˆ°æ»¡æ„ï¼Œå¹¶ç»§ç»­ä¿æŒåŠªåŠ›å’Œç§¯æçš„å­¦ä¹ æ€åº¦ã€‚å¦‚æœæ‚¨åœ¨æŸäº›ç§‘ç›®ä¸Šæ²¡æœ‰è¾¾åˆ°é¢„æœŸçš„æˆç»©ï¼Œä¸è¦ç°å¿ƒï¼Œè¿™ä¹Ÿæ˜¯å­¦ä¹ è¿‡ç¨‹ä¸­çš„ä¸€éƒ¨åˆ†ã€‚æˆ‘ä»¬é¼“åŠ±æ‚¨ä¸æ‚¨çš„ä»»è¯¾æ•™å¸ˆæˆ–è¾…å¯¼å‘˜è¿›è¡Œäº¤æµï¼Œä»–ä»¬å°†å¾ˆä¹æ„ä¸ºæ‚¨è§£ç­”ä»»ä½•ç–‘é—®å¹¶æä¾›å¸®åŠ©ã€‚è¯·è®°ä½ï¼Œå­¦ä¹ æ˜¯ä¸€ä¸ªæŒç»­ä¸æ–­çš„è¿‡ç¨‹ï¼Œæˆ‘ä»¬ç›¸ä¿¡æ‚¨æœ‰èƒ½åŠ›å…‹æœå›°éš¾å¹¶å–å¾—æ›´å¤§çš„è¿›æ­¥ã€‚
+            """
+            notificationList.append(notification)
+        return notificationList
+    
+# ç¼–å†™ä¸€ä¸ªå•å…ƒæµ‹è¯•
 if __name__ == '__main__':
-    student = Student(a)
-    print(notification)
+    address = 'æˆç»©è¡¨.xlsx'
+    studentTest = Student(address)
+    EmailInformationTest = EmailInformation(studentTest)
+    notificationList = EmailInformationTest.generateNotification()
+    for notification in notificationList:
+        print(notification)
