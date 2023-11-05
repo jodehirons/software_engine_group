@@ -27,8 +27,9 @@ class Student():
             }
             self.student_list.append(student_info)
 
+    def getData(self):
+        return self.student_list
     # 打印包含学生信息的列表 student_list
     def showAll(self):
         for student in self.student_list:
             print(student)
-

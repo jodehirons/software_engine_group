@@ -60,7 +60,7 @@ class window:
         self.var.set('所有')
         self.m = ['所有','学号','姓名']
 
-        self.menu = ttk.OptionMenu(frame1, self.var, '', *self.m)
+        self.menu = ttk.OptionMenu(frame1, self.var, '所有', *self.m)
         self.menu.grid(row=4, column=2)
 
         #使界面一直运行着
@@ -99,7 +99,7 @@ class notice:
         self.root.geometry('600x400')
         self.root.config(background='gray')
 
-        my_font = font.Font(family='宋体', size=14)
+        my_font = font.Font(family='宋体', size=20)
         frame = Frame(self.root, borderwidth=5, relief=GROOVE)
         frame.config(background='gray')
         frame.place(x=10, y=10, width=590, height=390)
@@ -108,8 +108,9 @@ class notice:
 
         self.text = Text(frame, height=390, font=my_font)
         self.text.pack()
-        self.text.insert(tkinter.END, value[0])
+        self.text.insert(tkinter.END, value)
 
         self.root.mainloop()
 
 
+# f = window('../成绩表.xlsx')
